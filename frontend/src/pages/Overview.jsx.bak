@@ -40,7 +40,7 @@ export default function Overview({ onNavigate }) {
            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
            <div className="relative z-10 text-center text-white bg-slate-900/80 backdrop-blur px-6 py-4 rounded-xl border border-white/10">
               <h2 className="text-xl font-bold mb-1">Bhagirathi - Ganga Corridor</h2>
-              <p className="text-slate-300 text-sm">Study corridor: ~145 km • V3 hydrodynamic domain: 15 km • Grid resolution: 30 m • Simulation window: 800 s</p>
+              <p className="text-slate-300 text-sm">Study corridor: ~145 km &bull; V3 hydrodynamic domain: 15 km &bull; Grid resolution: 30 m &bull; Simulation window: 800 s</p>
            </div>
         </div>
 

@@ -1,4 +1,6 @@
+import os
 
+overview = """
 import React from 'react';
 import { ArrowRight, Play, Server, Database, CheckCircle2, AlertTriangle, ShieldCheck } from 'lucide-react';
 
@@ -40,7 +42,7 @@ export default function Overview({ onNavigate }) {
            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent"></div>
            <div className="relative z-10 text-center text-white bg-slate-900/80 backdrop-blur px-6 py-4 rounded-xl border border-white/10">
               <h2 className="text-xl font-bold mb-1">Bhagirathi - Ganga Corridor</h2>
-              <p className="text-slate-300 text-sm">Study corridor: ~145 km • V3 hydrodynamic domain: 15 km • Grid resolution: 30 m • Simulation window: 800 s</p>
+              <p className="text-slate-300 text-sm">Study Domain: 145 km • Grid: 30 m</p>
            </div>
         </div>
 
@@ -95,3 +97,6 @@ export default function Overview({ onNavigate }) {
     </div>
   );
 }
+"""
+with open("frontend/src/pages/Overview.jsx", "w") as f:
+    f.write(overview)

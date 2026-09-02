@@ -1,15 +1,15 @@
+import os
 
+sim_lab = """
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, RotateCcw, ChevronRight, ChevronLeft, Map, Layers, LayoutPanelLeft } from 'lucide-react';
 import L from 'leaflet';
 import parseGeoraster from 'georaster';
 import GeoRasterLayer from 'georaster-layer-for-leaflet';
-import { useV3Data } from '../hooks/useV3Data';
 
 const SPEEDS = [1, 2, 5];
 
 export default function SimulationLab({ initialTimeMin = 0, onTimeChange, onNavigateToHadr }) {
-  const v3 = useV3Data();
   const [currentTimeMin, setCurrentTimeMin] = useState(initialTimeMin);
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
@@ -21,7 +21,6 @@ export default function SimulationLab({ initialTimeMin = 0, onTimeChange, onNavi
   const layersRef = useRef({
     basemap: null,
     floodFrame: null,
-    roadsLayer: null,
     maxDepth: null
   });
 
@@ -68,7 +67,7 @@ export default function SimulationLab({ initialTimeMin = 0, onTimeChange, onNavi
     });
     
     // Light professional basemap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; OpenStreetMap &copy; CARTO'
     }).addTo(map);
 
@@ -132,32 +131,6 @@ export default function SimulationLab({ initialTimeMin = 0, onTimeChange, onNavi
       })
       .catch(() => {});
   }, [currentTimeMin, activeLayer]);
-
-  
-  // Update Road Hazard visualization
-  useEffect(() => {
-    const map = mapInstanceRef.current;
-    if (!map || !v3.v3Roads) return;
-
-    if (layersRef.current.roadsLayer) {
-      map.removeLayer(layersRef.current.roadsLayer);
-    }
-
-    const currentT = Math.round(currentTimeMin * 60);
-
-    layersRef.current.roadsLayer = L.geoJSON(v3.v3Roads, {
-      style: (feature) => {
-        const arrTimeSec = (feature.properties.arrival_time_hr || 0) * 3600;
-        // If the road segment hasn't been hit yet by the flood
-        if (arrTimeSec > currentT) {
-          return { color: '#94A3B8', weight: 2, opacity: 0.6 }; // neutral/subtle
-        } else {
-          return { color: '#EA580C', weight: 4, opacity: 1.0 }; // orange/red hazard
-        }
-      }
-    }).addTo(map);
-
-  }, [currentTimeMin, v3.v3Roads]);
 
   const currentSec = Math.round(currentTimeMin * 60);
   const roadEdges = currentSec <= 0 ? 0 : currentSec <= 300 ? 31 : currentSec <= 600 ? 49 : 52;
@@ -302,3 +275,7 @@ export default function SimulationLab({ initialTimeMin = 0, onTimeChange, onNavi
     </div>
   );
 }
+"""
+with open("frontend/src/pages/SimulationLab.jsx", "w") as f:
+    f.write(sim_lab)
+

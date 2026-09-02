@@ -1,4 +1,6 @@
+import os
 
+comparison = """
 import React from 'react';
 import { Activity, AlertTriangle, ChevronRight } from 'lucide-react';
 import HydrographChart from '../components/charts/HydrographChart';
@@ -76,3 +78,6 @@ export default function ScenarioComparison() {
     </div>
   );
 }
+"""
+with open("frontend/src/pages/ScenarioComparison.jsx", "w") as f:
+    f.write(comparison)
